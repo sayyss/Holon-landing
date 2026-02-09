@@ -71,9 +71,9 @@ function App() {
       <section className="py-40 md:py-52 px-8">
         <div className="max-w-[800px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
           <img
-            src="/Holon-landing/holon_new_1.png"
+            src="/Holon-landing/holon_new_2.png"
             alt="Holon device"
-            className="w-full max-w-[280px] mx-auto"
+            className="w-full max-w-[550px] mx-auto"
           />
           <ul className="flex flex-col gap-6 font-mono text-sm sm:text-base font-light">
             <li className="flex items-start gap-3">
