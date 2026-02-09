@@ -35,4 +35,17 @@
     background-color: var(--color-accent);
     color: var(--color-bg);
   }
+
+  .light {
+    --color-bg: #f0f1eb;
+    --color-bg-elevated: #eaeae5;
+    --color-bg-subtle: #e0e0db;
+    --color-text-primary: #1a1a1a;
+    --color-text-secondary: #666666;
+    --color-text-muted: #999999;
+    --color-accent: #5a7a00;
+    --color-accent-dim: #4a6600;
+    --color-border: #d0d0cb;
+    --color-border-hover: #b0b0ab;
+  }
 }

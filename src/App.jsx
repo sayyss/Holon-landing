@@ -1,10 +1,19 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 function App() {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [dark, setDark] = useState(() => {
+    const saved = localStorage.getItem('holon-theme')
+    return saved ? saved === 'dark' : true
+  })
   const waitlistRef = useRef(null)
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('light', !dark)
+    localStorage.setItem('holon-theme', dark ? 'dark' : 'light')
+  }, [dark])
 
   const scrollToWaitlist = () => {
     waitlistRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -38,12 +47,21 @@ function App() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-bg/80 backdrop-blur-md border-b border-border">
         <div className="max-w-[1200px] mx-auto px-8 py-5 flex items-center justify-between">
           <span className="font-display text-2xl tracking-tight">Holon</span>
-          <button
-            onClick={scrollToWaitlist}
-            className="text-xs font-mono tracking-widest uppercase text-text-secondary hover:text-accent transition-colors duration-300 cursor-pointer"
-          >
-            Join Waitlist
-          </button>
+          <div className="flex items-center gap-6">
+            <button
+              onClick={() => setDark(!dark)}
+              className="text-xl font-mono text-text-muted hover:text-text-primary transition-colors duration-300 cursor-pointer"
+              aria-label="Toggle theme"
+            >
+              {dark ? '☀' : '●'}
+            </button>
+            <button
+              onClick={scrollToWaitlist}
+              className="text-xs font-mono tracking-widest uppercase text-text-secondary hover:text-accent transition-colors duration-300 cursor-pointer"
+            >
+              Join Waitlist
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -53,7 +71,7 @@ function App() {
           Holon
         </h1>
         <p className="text-text-secondary text-base sm:text-lg md:text-xl max-w-2xl leading-relaxed mb-14 font-mono font-light">
-          Unlimited. Personal. Always on.<br />
+          Personal. Private. Always On.<br />
           A device that runs AI locally.
         </p>
         <div className="flex flex-col items-center gap-4">
@@ -64,16 +82,41 @@ function App() {
             Join the Waitlist
             <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300">&rarr;</span>
           </button>
-          <span className="text-text-muted text-xs font-mono tracking-wide">
-            Be first to own your intelligence.
-          </span>
+        </div>
+      </section>
+
+      {/* Device Specs */}
+      <section className="py-40 md:py-52 px-8">
+        <div className="max-w-[800px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+          <img
+            src="/Holon-landing/holon_new_1.png"
+            alt="Holon device"
+            className="w-full max-w-[280px] mx-auto"
+          />
+          <ul className="flex flex-col gap-6 font-mono text-sm sm:text-base font-light">
+            <li className="flex items-start gap-3">
+              <span className="text-accent mt-0.5">+</span>
+              <span className="text-text-primary">Built on Nvidia's Jetson AGX Orin</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-accent mt-0.5">+</span>
+              <span className="text-text-primary">512gb of private, encrypted storage</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-accent mt-0.5">+</span>
+              <span className="text-text-primary">24/7 unlimited inference</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-accent mt-0.5">+</span>
+              <span className="text-text-primary">Run up to 30B parameter models</span>
+            </li>
+          </ul>
         </div>
       </section>
 
       {/* Problem */}
       <section className="py-40 md:py-52 px-8">
         <div className="max-w-[800px] mx-auto text-center">
-          <p className="text-text-muted text-xs font-mono tracking-[0.2em] uppercase mb-8">The problem</p>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl tracking-tight mb-24">
             AI is a rental economy.
           </h2>
@@ -129,13 +172,9 @@ function App() {
       {/* Product */}
       <section className="py-40 md:py-52 px-8">
         <div className="max-w-[900px] mx-auto text-center">
-          <p className="text-text-muted text-xs font-mono tracking-[0.2em] uppercase mb-8">What is Holon</p>
-          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl tracking-tight mb-6">
-            A device that makes<br />AI ownership real.
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl tracking-tight mb-24">
+            Your true personal intelligence.
           </h2>
-          <p className="text-text-secondary text-sm sm:text-base font-mono font-light mb-24">
-            Built on Nvidia's Jetson AGX platform.
-          </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
             <FeatureCard
@@ -150,8 +189,8 @@ function App() {
             />
             <FeatureCard
               icon="⚙"
-              title="Skills and preferences that stick."
-              description="Teach it how you work. Add tools it can use. It remembers your context, your style, your goals. Permanently."
+              title="Hyperpersonalization."
+              description="Customize to any extent, adding skills, tools that match your style. It remembers everything."
             />
             <FeatureCard
               icon="◉"
@@ -167,7 +206,7 @@ function App() {
         <div className="max-w-[900px] mx-auto text-center">
           <div className="border-t border-b border-border py-24 md:py-32">
             <blockquote className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight italic px-4">
-              &ldquo;The most powerful tool humanity has ever created shouldn&rsquo;t have a landlord.&rdquo;
+              &ldquo;The most powerful tool humanity has ever created, shouldn&rsquo;t have a landlord.&rdquo;
             </blockquote>
             <p className="text-text-secondary text-sm sm:text-base font-mono font-light mt-14 max-w-xl mx-auto leading-relaxed">
               Holon is building toward a world where intelligence is owned, not rented: personal, private, permanently yours.
