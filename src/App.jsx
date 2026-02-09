@@ -69,13 +69,13 @@ function App() {
 
       {/* Device Specs */}
       <section className="py-40 md:py-52 px-8">
-        <div className="max-w-[800px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+        <div className="max-w-[800px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start md:pt-0">
           <img
             src="/Holon-landing/holon_new_2.png"
             alt="Holon device"
             className="w-full max-w-[550px] mx-auto"
           />
-          <ul className="flex flex-col gap-6 font-mono text-sm sm:text-base font-light">
+          <ul className="flex flex-col gap-6 font-mono text-sm sm:text-base font-light md:mt-[15%]">
             <li className="flex items-start gap-3">
               <span className="text-accent mt-0.5">+</span>
               <span className="text-text-primary">Built on Nvidia's Jetson AGX Orin</span>
@@ -179,6 +179,77 @@ function App() {
               title="Always on. Acts without asking."
               description="It monitors, fetches, prepares, and alerts. Even when you're not there. Your AI works while you sleep."
             />
+          </div>
+        </div>
+      </section>
+
+      {/* Distributed Compute */}
+      <section className="py-40 md:py-52 px-8">
+        <div className="max-w-[900px] mx-auto text-center">
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl tracking-tight mb-6">
+            Distributed compute.
+          </h2>
+          <p className="text-text-secondary text-sm sm:text-base font-mono font-light mb-24 max-w-xl mx-auto leading-relaxed">
+            For resource intensive tasks, your Holon can use idle nodes on the network to speed up the process.
+          </p>
+
+          {/* Network diagram */}
+          <div className="relative max-w-[700px] mx-auto">
+            {/* Top device */}
+            <div className="flex justify-center mb-4">
+              <img
+                src="/Holon-landing/holon_new_2.png"
+                alt="Primary Holon node"
+                className="w-28 sm:w-36"
+              />
+            </div>
+
+            {/* Branching lines - SVG */}
+            <svg
+              viewBox="0 0 700 120"
+              className="w-full h-auto"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {/* Vertical line down from center */}
+              <line
+                x1="350" y1="0" x2="350" y2="50"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeDasharray="6 6"
+                className="text-border-hover"
+              />
+              {/* Branch left */}
+              <line
+                x1="350" y1="50" x2="175" y2="120"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeDasharray="6 6"
+                className="text-border-hover"
+              />
+              {/* Branch right */}
+              <line
+                x1="350" y1="50" x2="525" y2="120"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeDasharray="6 6"
+                className="text-border-hover"
+              />
+            </svg>
+
+            {/* Bottom two devices */}
+            <div className="flex justify-between px-8 sm:px-16 mt-4">
+              <img
+                src="/Holon-landing/holon_new_2.png"
+                alt="Holon network node"
+                className="w-24 sm:w-32"
+              />
+              <img
+                src="/Holon-landing/holon_new_2.png"
+                alt="Holon network node"
+                className="w-24 sm:w-32"
+              />
+            </div>
           </div>
         </div>
       </section>
