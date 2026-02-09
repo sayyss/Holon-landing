@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #0a0a0a;
-  --color-bg-elevated: #111111;
-  --color-bg-subtle: #1a1a1a;
-  --color-text-primary: #e8e8e8;
-  --color-text-secondary: #888888;
-  --color-text-muted: #555555;
-  --color-accent: #c8ff00;
-  --color-accent-dim: #a3cc00;
-  --color-border: #222222;
-  --color-border-hover: #333333;
+  --color-bg: #f0f1eb;
+  --color-bg-elevated: #eaeae5;
+  --color-bg-subtle: #e0e0db;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #666666;
+  --color-text-muted: #999999;
+  --color-accent: #5a7a00;
+  --color-accent-dim: #4a6600;
+  --color-border: #d0d0cb;
+  --color-border-hover: #b0b0ab;
   --font-display: "Instrument Serif", Georgia, serif;
   --font-mono: "DM Mono", "SF Mono", monospace;
 }
@@ -34,18 +34,5 @@
   ::selection {
     background-color: var(--color-accent);
     color: var(--color-bg);
-  }
-
-  .light {
-    --color-bg: #f0f1eb;
-    --color-bg-elevated: #eaeae5;
-    --color-bg-subtle: #e0e0db;
-    --color-text-primary: #1a1a1a;
-    --color-text-secondary: #666666;
-    --color-text-muted: #999999;
-    --color-accent: #5a7a00;
-    --color-accent-dim: #4a6600;
-    --color-border: #d0d0cb;
-    --color-border-hover: #b0b0ab;
   }
 }

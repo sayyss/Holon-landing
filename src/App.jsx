@@ -1,19 +1,10 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 
 function App() {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
-  const [dark, setDark] = useState(() => {
-    const saved = localStorage.getItem('holon-theme')
-    return saved ? saved === 'dark' : true
-  })
   const waitlistRef = useRef(null)
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('light', !dark)
-    localStorage.setItem('holon-theme', dark ? 'dark' : 'light')
-  }, [dark])
 
   const scrollToWaitlist = () => {
     waitlistRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -47,21 +38,12 @@ function App() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-bg/80 backdrop-blur-md border-b border-border">
         <div className="max-w-[1200px] mx-auto px-8 py-5 flex items-center justify-between">
           <span className="font-display text-2xl tracking-tight">Holon</span>
-          <div className="flex items-center gap-6">
-            <button
-              onClick={() => setDark(!dark)}
-              className="text-xl font-mono text-text-muted hover:text-text-primary transition-colors duration-300 cursor-pointer"
-              aria-label="Toggle theme"
-            >
-              {dark ? '☀' : '●'}
-            </button>
-            <button
-              onClick={scrollToWaitlist}
-              className="text-xs font-mono tracking-widest uppercase text-text-secondary hover:text-accent transition-colors duration-300 cursor-pointer"
-            >
-              Join Waitlist
-            </button>
-          </div>
+          <button
+            onClick={scrollToWaitlist}
+            className="text-xs font-mono tracking-widest uppercase text-text-secondary hover:text-accent transition-colors duration-300 cursor-pointer"
+          >
+            Join Waitlist
+          </button>
         </div>
       </nav>
 
