@@ -100,7 +100,7 @@ function App() {
       <section className="py-40 md:py-52 px-8">
         <div className="max-w-[800px] mx-auto text-center">
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl tracking-tight mb-24">
-            AI is a rental economy.
+            A step towards AI ownership.
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 border border-border">
@@ -137,14 +137,26 @@ function App() {
             </div>
 
             {/* Row 3 */}
-            <div className="px-8 py-8">
+            <div className="px-8 py-8 border-b border-border">
               <p className="text-text-secondary text-sm sm:text-base leading-relaxed font-mono font-light">
                 They can cut you off anytime.
               </p>
             </div>
-            <div className="px-8 py-8 md:border-l border-border">
+            <div className="px-8 py-8 border-b border-border md:border-l">
               <p className="text-text-primary text-sm sm:text-base leading-relaxed font-mono font-light">
                 No one can turn it off.
+              </p>
+            </div>
+
+            {/* Row 4 */}
+            <div className="px-8 py-8">
+              <p className="text-text-secondary text-sm sm:text-base leading-relaxed font-mono font-light">
+                Generic customization.
+              </p>
+            </div>
+            <div className="px-8 py-8 md:border-l border-border">
+              <p className="text-text-primary text-sm sm:text-base leading-relaxed font-mono font-light">
+                True extension of your mind.
               </p>
             </div>
           </div>
