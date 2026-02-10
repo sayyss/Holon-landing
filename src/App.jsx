@@ -71,7 +71,7 @@ function App() {
       <section className="py-40 md:py-52 px-8">
         <div className="max-w-[800px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start md:pt-0">
           <img
-            src="/Holon-landing/holon_new_2.png"
+            src="/holon_new_2.png"
             alt="Holon device"
             className="w-full max-w-[550px] mx-auto"
           />
@@ -198,7 +198,7 @@ function App() {
             {/* Top device */}
             <div className="flex justify-center mb-4">
               <img
-                src="/Holon-landing/holon_new_2.png"
+                src="/holon_new_2.png"
                 alt="Primary Holon node"
                 className="w-28 sm:w-36"
               />
@@ -240,12 +240,12 @@ function App() {
             {/* Bottom two devices */}
             <div className="flex justify-between px-8 sm:px-16 mt-4">
               <img
-                src="/Holon-landing/holon_new_2.png"
+                src="/holon_new_2.png"
                 alt="Holon network node"
                 className="w-24 sm:w-32"
               />
               <img
-                src="/Holon-landing/holon_new_2.png"
+                src="/holon_new_2.png"
                 alt="Holon network node"
                 className="w-24 sm:w-32"
               />
