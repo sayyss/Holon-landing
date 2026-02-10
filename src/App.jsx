@@ -103,62 +103,46 @@ function App() {
             A step towards AI ownership.
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 border border-border">
-            {/* Header row */}
+          {/* Desktop table */}
+          <div className="hidden md:grid grid-cols-2 border border-border">
             <div className="px-8 py-5 border-b border-border bg-bg-elevated">
               <span className="text-xs font-mono tracking-[0.15em] uppercase text-text-muted">Rented AI</span>
             </div>
-            <div className="px-8 py-5 border-b border-border bg-bg-elevated md:border-l">
+            <div className="px-8 py-5 border-b border-border bg-bg-elevated border-l">
               <span className="text-xs font-mono tracking-[0.15em] uppercase text-accent">Owned AI</span>
             </div>
-
-            {/* Row 1 */}
             <div className="px-8 py-8 border-b border-border">
-              <p className="text-text-secondary text-sm sm:text-base leading-relaxed font-mono font-light">
-                They see everything you ask.
-              </p>
+              <p className="text-text-secondary text-sm sm:text-base leading-relaxed font-mono font-light">They see everything you ask.</p>
             </div>
-            <div className="px-8 py-8 border-b border-border md:border-l">
-              <p className="text-text-primary text-sm sm:text-base leading-relaxed font-mono font-light">
-                Your data never leaves your device.
-              </p>
+            <div className="px-8 py-8 border-b border-border border-l">
+              <p className="text-text-primary text-sm sm:text-base leading-relaxed font-mono font-light">Your data never leaves your device.</p>
             </div>
-
-            {/* Row 2 */}
             <div className="px-8 py-8 border-b border-border">
-              <p className="text-text-secondary text-sm sm:text-base leading-relaxed font-mono font-light">
-                They can change the model overnight.
-              </p>
+              <p className="text-text-secondary text-sm sm:text-base leading-relaxed font-mono font-light">They can change the model overnight.</p>
             </div>
-            <div className="px-8 py-8 border-b border-border md:border-l">
-              <p className="text-text-primary text-sm sm:text-base leading-relaxed font-mono font-light">
-                Your AI stays consistent.
-              </p>
+            <div className="px-8 py-8 border-b border-border border-l">
+              <p className="text-text-primary text-sm sm:text-base leading-relaxed font-mono font-light">Your AI stays consistent.</p>
             </div>
-
-            {/* Row 3 */}
             <div className="px-8 py-8 border-b border-border">
-              <p className="text-text-secondary text-sm sm:text-base leading-relaxed font-mono font-light">
-                They can cut you off anytime.
-              </p>
+              <p className="text-text-secondary text-sm sm:text-base leading-relaxed font-mono font-light">They can cut you off anytime.</p>
             </div>
-            <div className="px-8 py-8 border-b border-border md:border-l">
-              <p className="text-text-primary text-sm sm:text-base leading-relaxed font-mono font-light">
-                No one can turn it off.
-              </p>
+            <div className="px-8 py-8 border-b border-border border-l">
+              <p className="text-text-primary text-sm sm:text-base leading-relaxed font-mono font-light">No one can turn it off.</p>
             </div>
-
-            {/* Row 4 */}
             <div className="px-8 py-8">
-              <p className="text-text-secondary text-sm sm:text-base leading-relaxed font-mono font-light">
-                Generic customization.
-              </p>
+              <p className="text-text-secondary text-sm sm:text-base leading-relaxed font-mono font-light">Generic personalization.</p>
             </div>
-            <div className="px-8 py-8 md:border-l border-border">
-              <p className="text-text-primary text-sm sm:text-base leading-relaxed font-mono font-light">
-                True extension of your mind.
-              </p>
+            <div className="px-8 py-8 border-l border-border">
+              <p className="text-text-primary text-sm sm:text-base leading-relaxed font-mono font-light">True extension of your mind.</p>
             </div>
+          </div>
+
+          {/* Mobile stacked cards */}
+          <div className="flex flex-col gap-4 md:hidden">
+            <ComparisonCard rented="They see everything you ask." owned="Your data never leaves your device." />
+            <ComparisonCard rented="They can change the model overnight." owned="Your AI stays consistent." />
+            <ComparisonCard rented="They can cut you off anytime." owned="No one can turn it off." />
+            <ComparisonCard rented="Generic personalization." owned="True extension of your mind." />
           </div>
         </div>
       </section>
@@ -331,6 +315,21 @@ function FeatureCard({ icon, title, description }) {
       <p className="text-text-secondary text-sm sm:text-base font-mono font-light leading-relaxed">
         {description}
       </p>
+    </div>
+  )
+}
+
+function ComparisonCard({ rented, owned }) {
+  return (
+    <div className="border border-border text-left">
+      <div className="px-6 py-4 border-b border-border">
+        <span className="text-xs font-mono tracking-[0.15em] uppercase text-text-muted block mb-2">Rented AI</span>
+        <p className="text-text-secondary text-sm leading-relaxed font-mono font-light">{rented}</p>
+      </div>
+      <div className="px-6 py-4">
+        <span className="text-xs font-mono tracking-[0.15em] uppercase text-accent block mb-2">Owned AI</span>
+        <p className="text-text-primary text-sm leading-relaxed font-mono font-light">{owned}</p>
+      </div>
     </div>
   )
 }
