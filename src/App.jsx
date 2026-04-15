@@ -134,8 +134,8 @@ function App() {
             />
             <FeatureCard
               icon="◉"
-              title="Always on. Acts without asking."
-              description="Monitors, prepares, alerts. Your AI works while you sleep."
+              title="Personal weights."
+              description="Seamless finetuning preferences, memories, style."
             />
           </div>
         </div>
