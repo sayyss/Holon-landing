@@ -53,7 +53,7 @@ function App() {
           Holon
         </h1>
         <p className="text-text-secondary text-base sm:text-lg md:text-xl max-w-2xl leading-relaxed mb-14 font-mono font-light">
-          Nobody else has your weights.<br />
+          Intelligence that has your taste.<br />
           Personal. Private. Yours.
         </p>
         <div className="flex flex-col items-center gap-4">
@@ -72,7 +72,7 @@ function App() {
         <div className="max-w-[800px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start md:pt-0">
           <div>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl tracking-tight mb-6">
-              Learns you while you sleep.
+              Nobody else has your weights.
             </h2>
             <p className="text-text-secondary text-sm sm:text-base font-mono font-light leading-relaxed mb-10">
               Overnight, Holon studies your conversations, memories, and style of thinking then finetunes itself. All on-device.
@@ -100,6 +100,29 @@ function App() {
         </div>
       </section>
 
+      {/* Growth Timeline */}
+      <section className="py-40 md:py-52 px-8">
+        <div className="max-w-[800px] mx-auto text-center">
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl tracking-tight mb-16">
+            Watch it grow alongside you.
+          </h2>
+          <div className="flex flex-col gap-8 font-mono text-sm sm:text-base font-light max-w-md mx-auto text-left">
+            <div className="flex gap-4">
+              <span className="text-text-muted shrink-0 w-20">Day 0</span>
+              <span className="text-text-primary">Barely knows you, but ready to learn.</span>
+            </div>
+            <div className="flex gap-4">
+              <span className="text-text-muted shrink-0 w-20">Week 1</span>
+              <span className="text-text-primary">Knows you as a person.</span>
+            </div>
+            <div className="flex gap-4">
+              <span className="text-text-muted shrink-0 w-20">Month 3</span>
+              <span className="text-text-primary">Knows the what, the how, and the why.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Ownership */}
       <section className="py-40 md:py-52 px-8">
         <div className="max-w-[800px] mx-auto text-center">
@@ -124,7 +147,7 @@ function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border">
             <FeatureCard
               icon="∞"
-              title="No rate limits. No fees."
+              title="No rate limits. No subscriptions."
               description="Ask a thousand questions. Generate all night. Your compute."
             />
             <FeatureCard

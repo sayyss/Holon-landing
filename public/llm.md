@@ -1,13 +1,13 @@
 # Holon
 
-> Nobody else has your weights.
-> Personal. Private. Yours.
+> Intelligence that has your taste.
+> On your desk.
 
 [Join the Waitlist]
 
 ---
 
-## Learns you while you sleep.
+## Nobody else has your weights.
 
 Overnight, Holon studies your conversations, memories,
 and style of thinking then finetunes itself. All on-device.
@@ -16,7 +16,13 @@ and style of thinking then finetunes itself. All on-device.
 + Supports Gemma 4 / Qwen 3.5 models
 + Up to 30B parameters, 32GB memory
 
----
+--- 
+
+## Watch it grow alongside you
+
+- Day 0: Barely knows you, but ready to learn.
+- Week 1: Knows you as a person. 
+- Month 3: Knows the what, the how, and the why
 
 ## A step towards AI ownership.
 
@@ -28,7 +34,7 @@ Extension. Not tool.
 
 ## True personal intelligence.
 
-### No rate limits. No fees.
+### No rate limits. No subscriptions.
 Ask a thousand questions. Generate all night. Your compute.
 
 ### Agentic out of the box.
