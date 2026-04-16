@@ -24,8 +24,6 @@ Owned. Not rented.
 Personal. Not generic.
 Extension. Not tool.
 
-AI is the most transformational tool humanity has ever created, and it shouldn't have a landlord. Holon is building towards a world where intelligence is owned, not rented: Personal, private, permanently yours.
-
 ---
 
 ## True personal intelligence.
@@ -36,8 +34,8 @@ Ask a thousand questions. Generate all night. Your compute.
 ### Agentic out of the box.
 Ships with OpenClaw and Hermes. Browse, code, automate — day one.
 
-### Always on. Acts without asking.
-Monitors, prepares, alerts. Your AI works while you sleep.
+### Personal weights.
+Seamless finetuning preferences, memories, style.
 
 ---
 
