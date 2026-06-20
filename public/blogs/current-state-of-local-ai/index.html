@@ -1,0 +1,721 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="An analysis of local AI adoption, tooling, hardware, and pain points from r/LocalLLaMA."
+    />
+    <meta name="theme-color" content="#f5f5f0" />
+    <title>The current state of local AI - Holon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f5f5f0;
+        --bg-elevated: #eaeae5;
+        --text-primary: #1a1a1a;
+        --text-secondary: #666666;
+        --text-muted: #999999;
+        --accent: #5a7a00;
+        --border: #d0d0cb;
+        --display: "Instrument Serif", Georgia, serif;
+        --mono: "DM Mono", "SF Mono", monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        background: var(--bg);
+        color: var(--text-primary);
+        font-family: var(--mono);
+        font-size: 11.2px;
+        font-weight: 300;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      a {
+        color: inherit;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 0.18em;
+      }
+
+      ::selection {
+        background: var(--accent);
+        color: var(--bg);
+      }
+
+      .page {
+        margin: 0 auto;
+        max-width: 900px;
+        padding: 56px 24px 96px;
+      }
+
+      .brand {
+        display: inline-flex;
+        margin-bottom: 72px;
+        color: var(--text-secondary);
+        font-size: 0.55rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow {
+        color: var(--accent);
+        font-size: 0.55rem;
+        letter-spacing: 0.12em;
+        margin: 0 0 18px;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--display);
+        font-weight: 400;
+        letter-spacing: 0;
+        line-height: 1;
+      }
+
+      h1 {
+        font-size: clamp(2.94rem, 7.7vw, 5.6rem);
+        margin: 0 0 28px;
+        max-width: 760px;
+      }
+
+      h2 {
+        font-size: clamp(1.68rem, 4.2vw, 3.08rem);
+        margin: 96px 0 24px;
+      }
+
+      h3 {
+        font-size: clamp(1.26rem, 2.8vw, 1.96rem);
+        margin: 56px 0 20px;
+      }
+
+      p {
+        color: var(--text-secondary);
+        font-size: 1.25rem;
+        margin: 0 0 24px;
+      }
+
+      .lede {
+        color: var(--text-primary);
+        font-size: clamp(1.15rem, 2vw, 1.35rem);
+        line-height: 1.7;
+        margin-bottom: 56px;
+        max-width: 760px;
+      }
+
+      .meta {
+        color: var(--text-muted);
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 0.56rem;
+        gap: 12px;
+        letter-spacing: 0.04em;
+        margin-bottom: 28px;
+        text-transform: uppercase;
+      }
+
+      .section-rule {
+        border-top: 1px solid var(--border);
+        margin-top: 80px;
+        padding-top: 8px;
+      }
+
+      .chart {
+        border: 1px solid var(--border);
+        margin: 36px 0 48px;
+        padding: 22px;
+      }
+
+      .chart-title {
+        color: var(--text-primary);
+        font-size: 0.57rem;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        margin: 0 0 22px;
+        text-transform: uppercase;
+      }
+
+      .bar-list {
+        display: grid;
+        gap: 14px;
+      }
+
+      .bar-row {
+        display: grid;
+        gap: 8px;
+      }
+
+      .bar-head {
+        align-items: baseline;
+        display: flex;
+        gap: 14px;
+        justify-content: space-between;
+      }
+
+      .bar-label {
+        color: var(--text-primary);
+        font-size: 1rem;
+      }
+
+      .bar-value {
+        color: var(--accent);
+        font-size: 1rem;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+
+      .bar-track {
+        background: var(--bg-elevated);
+        height: 10px;
+        position: relative;
+        width: 100%;
+      }
+
+      .bar-fill {
+        background: var(--accent);
+        height: 100%;
+        width: calc(var(--value) * 1%);
+      }
+
+      .paired .bar-row {
+        gap: 10px;
+      }
+
+      .paired-bars {
+        display: grid;
+        gap: 6px;
+      }
+
+      .paired-track {
+        align-items: center;
+        display: grid;
+        gap: 10px;
+        grid-template-columns: 112px 1fr 48px;
+      }
+
+      .paired-name,
+      .paired-value {
+        color: var(--text-muted);
+        font-size: 0.82rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .paired-value {
+        color: var(--accent);
+        text-align: right;
+      }
+
+      .bar-fill.secondary {
+        background: var(--text-primary);
+      }
+
+      .callout {
+        border-left: 2px solid var(--accent);
+        color: var(--text-primary);
+        margin: 40px 0;
+        padding: 6px 0 6px 22px;
+      }
+
+      .footer-note {
+        border-top: 1px solid var(--border);
+        color: var(--text-muted);
+        font-size: 0.57rem;
+        margin-top: 96px;
+        padding-top: 24px;
+      }
+
+      @media (max-width: 680px) {
+        .page {
+          padding: 36px 18px 72px;
+        }
+
+        .brand {
+          margin-bottom: 52px;
+        }
+
+        .chart {
+          padding: 18px;
+        }
+
+        .bar-head {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 2px;
+        }
+
+        .paired-track {
+          grid-template-columns: 88px 1fr 42px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <a class="brand" href="/blogs/">Blogs</a>
+
+      <p class="eyebrow">Research</p>
+      <h1>The current state of local AI</h1>
+      <div class="meta">
+        <span>June 2026</span>
+        <span>r/LocalLLaMA analysis</span>
+      </div>
+
+      <p class="lede">
+        What many believed to be a distant future, where open-weight AI could
+        match closed-source models from frontier labs, has become a near-term
+        reality. A few thousand dollars can now buy the hardware needed to run
+        models that match or exceed last year's frontier intelligence.
+      </p>
+
+      <p>
+        The local AI community is largely supplied by Chinese frontier labs like
+        Alibaba's Qwen, DeepSeek, and Z.Ai, and is now being pushed by Google's
+        DeepMind through the Gemma line of open-weight models. The center of the
+        community is r/LocalLLaMA, named after Llama, Meta's first broadly
+        influential open-weight model.
+      </p>
+
+      <p>
+        Since Llama 1, local AI has grown quickly. Contributions from frontier
+        labs and open-source developers now make it possible for people with
+        modest technical knowledge to host and run capable models at home.
+      </p>
+
+      <p>
+        To understand how people are using local AI today, we (and Claude)
+        analyzed 49k posts and more than 800k comments from r/LocalLLaMA over
+        the last twelve months.
+      </p>
+
+      <section class="section-rule">
+        <h2>Community at a glance</h2>
+        <p>
+          r/LocalLLaMA had nearly one million subscribers as of June 2026, with
+          about 136 new posts every day. Roughly 78% of those posts contained
+          some kind of problem signal, meaning about four out of every five
+          threads involved someone trying to make something work.
+        </p>
+        <p>
+          The subreddit has become one of the primary places where the local AI
+          community shares ideas, benchmarks, hardware setups, and problems.
+        </p>
+      </section>
+
+      <section>
+        <h2>Why local?</h2>
+        <p>
+          We analyzed 47k records to understand what motivates people to run
+          models locally. Cost and rate limits dominate, especially among
+          programmers using coding agents with persistent runtime and heavy token
+          usage.
+        </p>
+
+        <figure class="chart" aria-labelledby="motivation-title">
+          <figcaption class="chart-title" id="motivation-title">
+            Motivation share
+          </figcaption>
+          <div class="bar-list">
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Cost</span><span class="bar-value">50.1%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 50.1"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Control and customization</span><span class="bar-value">17.4%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 17.4"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Speed and latency</span><span class="bar-value">13.1%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 13.1"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Privacy</span><span class="bar-value">9.6%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 9.6"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Offline operation</span><span class="bar-value">6.0%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 6"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Rate-limit refugees</span><span class="bar-value">3.2%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 3.2"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Data sovereignty</span><span class="bar-value">0.4%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 0.4"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">No cloud</span><span class="bar-value">0.2%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 0.2"></div></div>
+            </div>
+          </div>
+        </figure>
+
+        <p>
+          Beyond cost and rate limits, control is the next major driver. Users
+          want models they can customize, finetune, and run without the output
+          constraints of commercial frontier systems. Speed, latency, and privacy
+          form the next large cluster of motivations, while compliance-specific
+          needs are smaller but still visible.
+        </p>
+      </section>
+
+      <section>
+        <h2>How are they running it?</h2>
+        <p>
+          LLMs are not simply downloaded and opened like ordinary apps. They are
+          usually served through an inference engine that manages runtime,
+          memory, quantization, batching, and hardware execution. Popular choices
+          include llama.cpp, Ollama, vLLM, LM Studio, and MLX.
+        </p>
+
+        <figure class="chart" aria-labelledby="tooling-title">
+          <figcaption class="chart-title" id="tooling-title">
+            Runtime and tooling share
+          </figcaption>
+          <div class="bar-list">
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">llama.cpp</span><span class="bar-value">48.5%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 48.5"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Ollama</span><span class="bar-value">14.0%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 14"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">vLLM</span><span class="bar-value">13.6%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 13.6"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">LM Studio</span><span class="bar-value">12.5%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 12.5"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">ROCm</span><span class="bar-value">4.9%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 4.9"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">MLX</span><span class="bar-value">2.6%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 2.6"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Vulkan</span><span class="bar-value">2.3%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 2.3"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">SGLang</span><span class="bar-value">1.6%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 1.6"></div></div>
+            </div>
+          </div>
+        </figure>
+
+        <p>
+          llama.cpp is the dominant local runtime, which is not surprising: it
+          forms the base for consumer-facing tools like Ollama and LM Studio.
+          vLLM trails closely behind those apps as a production-oriented
+          inference engine with stronger support for concurrency and caching.
+          MLX remains important for Apple Silicon users.
+        </p>
+      </section>
+
+      <section>
+        <h2>What are they running it on?</h2>
+        <p>
+          NVIDIA GPUs are still the default hardware choice for local LLMs, with
+          Apple Silicon and AMD following behind. The RTX 3090 remains the
+          standout used-market card because 24GB of VRAM makes it unusually
+          useful for mid-sized open models.
+        </p>
+
+        <figure class="chart" aria-labelledby="platform-title">
+          <figcaption class="chart-title" id="platform-title">
+            Platform share
+          </figcaption>
+          <div class="bar-list">
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">NVIDIA</span><span class="bar-value">55.7%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 55.7"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Apple Silicon</span><span class="bar-value">20.4%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 20.4"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">AMD</span><span class="bar-value">19.0%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 19"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Intel</span><span class="bar-value">3.9%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 3.9"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Edge and ARM SBC</span><span class="bar-value">0.9%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 0.9"></div></div>
+            </div>
+          </div>
+        </figure>
+
+        <figure class="chart" aria-labelledby="hardware-title">
+          <figcaption class="chart-title" id="hardware-title">
+            Hardware share
+          </figcaption>
+          <div class="bar-list">
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">RTX 3090</span><span class="bar-value">24.4%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 24.4"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">RTX 5090</span><span class="bar-value">12.7%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 12.7"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">DGX Spark</span><span class="bar-value">8.9%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 8.9"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Strix Halo</span><span class="bar-value">8.2%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 8.2"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Mac</span><span class="bar-value">5.3%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 5.3"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">RTX 5060 Ti 16GB</span><span class="bar-value">4.2%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 4.2"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">AMD GPU</span><span class="bar-value">4.1%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 4.1"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">RTX 3060 12GB</span><span class="bar-value">3.9%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 3.9"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">AMD Strix Halo</span><span class="bar-value">3.7%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 3.7"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">RTX PRO 6000</span><span class="bar-value">3.7%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 3.7"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">NVIDIA DGX Spark</span><span class="bar-value">3.6%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 3.6"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Multi-GPU setup</span><span class="bar-value">3.5%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 3.5"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">AMD MI50</span><span class="bar-value">3.5%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 3.5"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">RTX 4090</span><span class="bar-value">3.5%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 3.5"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">2x RTX 3090</span><span class="bar-value">3.4%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 3.4"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">4x RTX 3090</span><span class="bar-value">3.4%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 3.4"></div></div>
+            </div>
+          </div>
+        </figure>
+
+        <p>
+          Multi-GPU rigs appear regularly, especially 2x and 4x RTX 3090 setups.
+          That points to a community willing to assemble used hardware in order
+          to reach larger models, longer context windows, or better throughput.
+        </p>
+      </section>
+
+      <section>
+        <h2>What problems are they facing?</h2>
+        <p>
+          Setup and performance remain the largest barriers. Users have to make
+          choices across hardware, model family, inference engine, interface,
+          quantization, context length, and memory layout before they ever reach
+          a stable experience.
+        </p>
+
+        <figure class="chart paired" aria-labelledby="pain-title">
+          <figcaption class="chart-title" id="pain-title">
+            Problem share and high-severity share
+          </figcaption>
+          <div class="bar-list">
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Setup and installation</span></div>
+              <div class="paired-bars">
+                <div class="paired-track"><span class="paired-name">Problem</span><div class="bar-track"><div class="bar-fill" style="--value: 23.1"></div></div><span class="paired-value">23.1%</span></div>
+                <div class="paired-track"><span class="paired-name">Severe</span><div class="bar-track"><div class="bar-fill secondary" style="--value: 27"></div></div><span class="paired-value">27%</span></div>
+              </div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Performance and speed</span></div>
+              <div class="paired-bars">
+                <div class="paired-track"><span class="paired-name">Problem</span><div class="bar-track"><div class="bar-fill" style="--value: 20.7"></div></div><span class="paired-value">20.7%</span></div>
+                <div class="paired-track"><span class="paired-name">Severe</span><div class="bar-track"><div class="bar-fill secondary" style="--value: 27"></div></div><span class="paired-value">27%</span></div>
+              </div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Hardware sizing and VRAM</span></div>
+              <div class="paired-bars">
+                <div class="paired-track"><span class="paired-name">Problem</span><div class="bar-track"><div class="bar-fill" style="--value: 14.6"></div></div><span class="paired-value">14.6%</span></div>
+                <div class="paired-track"><span class="paired-name">Severe</span><div class="bar-track"><div class="bar-fill secondary" style="--value: 38"></div></div><span class="paired-value">38%</span></div>
+              </div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">UI and frontend fragmentation</span></div>
+              <div class="paired-bars">
+                <div class="paired-track"><span class="paired-name">Problem</span><div class="bar-track"><div class="bar-fill" style="--value: 13.3"></div></div><span class="paired-value">13.3%</span></div>
+                <div class="paired-track"><span class="paired-name">Severe</span><div class="bar-track"><div class="bar-fill secondary" style="--value: 12"></div></div><span class="paired-value">12%</span></div>
+              </div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Model selection paralysis</span></div>
+              <div class="paired-bars">
+                <div class="paired-track"><span class="paired-name">Problem</span><div class="bar-track"><div class="bar-fill" style="--value: 11.7"></div></div><span class="paired-value">11.7%</span></div>
+                <div class="paired-track"><span class="paired-name">Severe</span><div class="bar-track"><div class="bar-fill secondary" style="--value: 9"></div></div><span class="paired-value">9%</span></div>
+              </div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Use-case fit</span></div>
+              <div class="paired-bars">
+                <div class="paired-track"><span class="paired-name">Problem</span><div class="bar-track"><div class="bar-fill" style="--value: 9.4"></div></div><span class="paired-value">9.4%</span></div>
+                <div class="paired-track"><span class="paired-name">Severe</span><div class="bar-track"><div class="bar-fill secondary" style="--value: 25"></div></div><span class="paired-value">25%</span></div>
+              </div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Quantization confusion</span></div>
+              <div class="paired-bars">
+                <div class="paired-track"><span class="paired-name">Problem</span><div class="bar-track"><div class="bar-fill" style="--value: 4.1"></div></div><span class="paired-value">4.1%</span></div>
+                <div class="paired-track"><span class="paired-name">Severe</span><div class="bar-track"><div class="bar-fill secondary" style="--value: 15"></div></div><span class="paired-value">15%</span></div>
+              </div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Finetuning</span></div>
+              <div class="paired-bars">
+                <div class="paired-track"><span class="paired-name">Problem</span><div class="bar-track"><div class="bar-fill" style="--value: 3.1"></div></div><span class="paired-value">3.1%</span></div>
+                <div class="paired-track"><span class="paired-name">Severe</span><div class="bar-track"><div class="bar-fill secondary" style="--value: 28"></div></div><span class="paired-value">28%</span></div>
+              </div>
+            </div>
+          </div>
+        </figure>
+
+        <p>
+          Hardware sizing is especially severe because context windows and KV
+          cache growth can push sessions out of memory even after a model itself
+          fits. A smaller but important segment of the community is focused on
+          local finetuning, particularly for coding workflows.
+        </p>
+      </section>
+
+      <section>
+        <h2>Local AI use cases</h2>
+        <p>
+          Coding is the dominant use case. The rise of agentic coding tools has
+          made rate limits, cost spikes, and perceived model quality changes much
+          more visible to developers. Automation is the second-largest category,
+          especially for home workflows and personal orchestration.
+        </p>
+
+        <figure class="chart" aria-labelledby="usecase-title">
+          <figcaption class="chart-title" id="usecase-title">
+            Use-case share
+          </figcaption>
+          <div class="bar-list">
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Coding and agentic coding</span><span class="bar-value">49.7%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 49.7"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Automation and orchestration</span><span class="bar-value">28.1%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 28.1"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Legal</span><span class="bar-value">7.0%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 7"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Homelab and family server</span><span class="bar-value">5.4%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 5.4"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Content creation</span><span class="bar-value">4.3%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 4.3"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Education and tutoring</span><span class="bar-value">2.2%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 2.2"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Finance and accounting</span><span class="bar-value">1.6%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 1.6"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Medical and HIPAA</span><span class="bar-value">1.1%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 1.1"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Accessibility</span><span class="bar-value">0.5%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 0.5"></div></div>
+            </div>
+          </div>
+        </figure>
+
+        <p>
+          Professionals who need data privacy, especially in legal and medical
+          contexts, represent a smaller but meaningful part of the ecosystem.
+          These users are less driven by experimentation and more by control over
+          where sensitive information goes.
+        </p>
+      </section>
+
+      <section>
+        <h2>Towards a sovereign AI future</h2>
+        <p class="callout">
+          Local AI is a step toward private, unrestricted access to intelligence.
+        </p>
+        <p>
+          There are still many problems to solve before an average consumer will
+          consider running their own models locally, let alone buying a home
+          server to do it.
+        </p>
+        <p>
+          <a href="/">
+            Sign up for waitlist to access Holon, a new kind of computer that
+            aims to address these issues
+          </a>
+        </p>
+      </section>
+
+      <p class="footer-note">
+        Data normalized from the tables in the original analysis. Charts show
+        percentage share only.
+      </p>
+    </main>
+  </body>
+</html>
