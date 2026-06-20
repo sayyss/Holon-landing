@@ -8,7 +8,7 @@
       content="An analysis of local AI adoption, tooling, hardware, and pain points from r/LocalLLaMA."
     />
     <meta name="theme-color" content="#f5f5f0" />
-    <title>The current state of local AI - Holon</title>
+    <title>Glimpse into local AI - Holon</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -140,8 +140,8 @@
 
       .chart {
         border: 1px solid var(--border);
-        margin: 36px 0 48px;
-        padding: 22px;
+        margin: 30px 0 40px;
+        padding: 18px;
       }
 
       .chart-title {
@@ -155,12 +155,12 @@
 
       .bar-list {
         display: grid;
-        gap: 14px;
+        gap: 10px;
       }
 
       .bar-row {
         display: grid;
-        gap: 8px;
+        gap: 6px;
       }
 
       .bar-head {
@@ -184,7 +184,7 @@
 
       .bar-track {
         background: var(--bg-elevated);
-        height: 10px;
+        height: 8px;
         position: relative;
         width: 100%;
       }
@@ -273,7 +273,7 @@
       <a class="brand" href="/blogs/">Blogs</a>
 
       <p class="eyebrow">Research</p>
-      <h1>The current state of local AI</h1>
+      <h1>Glimpse into local AI</h1>
       <div class="meta">
         <span>June 2026</span>
         <span>r/LocalLLaMA analysis</span>
@@ -433,6 +433,77 @@
           vLLM trails closely behind those apps as a production-oriented
           inference engine with stronger support for concurrency and caching.
           MLX remains important for Apple Silicon users.
+        </p>
+      </section>
+
+      <section>
+        <h2>What models are they running?</h2>
+        <p>
+          Model choice is no longer centered on one lab. Qwen dominates the
+          discussion, with DeepSeek, GLM, Kimi, Gemma, Mistral, and Llama all
+          appearing as meaningful parts of the local ecosystem.
+        </p>
+
+        <figure class="chart" aria-labelledby="models-title">
+          <figcaption class="chart-title" id="models-title">
+            Model family share
+          </figcaption>
+          <div class="bar-list">
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Qwen family</span><span class="bar-value">50.2%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 50.2"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">GPT-OSS</span><span class="bar-value">10.2%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 10.2"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">DeepSeek</span><span class="bar-value">8.1%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 8.1"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Gemma family</span><span class="bar-value">7.5%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 7.5"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">GLM</span><span class="bar-value">6.9%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 6.9"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Kimi</span><span class="bar-value">5.7%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 5.7"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Mistral family</span><span class="bar-value">4.1%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 4.1"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Llama family</span><span class="bar-value">2.9%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 2.9"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Nemotron</span><span class="bar-value">1.8%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 1.8"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Whisper</span><span class="bar-value">1.3%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 1.3"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Granite</span><span class="bar-value">0.9%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 0.9"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span class="bar-label">Phi</span><span class="bar-value">0.5%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--value: 0.5"></div></div>
+            </div>
+          </div>
+        </figure>
+
+        <p>
+          The subreddit name still carries Llama's early cultural weight, but
+          the current conversation is much broader. The center of gravity has
+          shifted toward Qwen and a wider set of open-weight model families.
         </p>
       </section>
 
