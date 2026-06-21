@@ -302,8 +302,16 @@
 
       <p>
         To understand how people are talking about local AI today, we (and
-        Claude) analyzed keyword and mention patterns across 49k posts and more
-        than 800k comments from r/LocalLLaMA over the last twelve months.
+        Claude) analyzed 49k posts and more than 800k comments from
+        r/LocalLLaMA over the last twelve months.
+      </p>
+
+      <p>
+        Method note: this is a signal analysis, not a survey. Pain points,
+        software stacks, and hardware contexts came from per-thread LLM
+        extraction. Motivations and use cases combine LLM-extracted text with
+        regex bucketing. Model-family usage is regex-based mention counting over
+        raw post and comment text.
       </p>
 
       <section class="section-rule">
@@ -330,7 +338,7 @@
 
         <figure class="chart" aria-labelledby="motivation-title">
           <figcaption class="chart-title" id="motivation-title">
-            Motivation signal share
+            Hybrid motivation signal share
           </figcaption>
           <div class="bar-list">
             <div class="bar-row">
@@ -388,7 +396,7 @@
 
         <figure class="chart" aria-labelledby="tooling-title">
           <figcaption class="chart-title" id="tooling-title">
-            Runtime and tooling share
+            Extracted software stack share
           </figcaption>
           <div class="bar-list">
             <div class="bar-row">
@@ -445,7 +453,7 @@
 
         <figure class="chart" aria-labelledby="models-title">
           <figcaption class="chart-title" id="models-title">
-            Model family share
+            Regex model mention share
           </figcaption>
           <div class="bar-list">
             <div class="bar-row">
@@ -517,7 +525,7 @@
 
         <figure class="chart" aria-labelledby="platform-title">
           <figcaption class="chart-title" id="platform-title">
-            Platform share
+            Platform signal share
           </figcaption>
           <div class="bar-list">
             <div class="bar-row">
@@ -545,7 +553,7 @@
 
         <figure class="chart" aria-labelledby="hardware-title">
           <figcaption class="chart-title" id="hardware-title">
-            Hardware share
+            Extracted hardware context share
           </figcaption>
           <div class="bar-list">
             <div class="bar-row">
@@ -617,7 +625,7 @@
 
         <figure class="chart paired" aria-labelledby="pain-title">
           <figcaption class="chart-title" id="pain-title">
-            Problem signal share and high-severity share
+            LLM-judged problem share and high-severity share
           </figcaption>
           <div class="bar-list">
             <div class="bar-row">
@@ -698,7 +706,7 @@
 
         <figure class="chart" aria-labelledby="usecase-title">
           <figcaption class="chart-title" id="usecase-title">
-            Use-case signal share
+            Hybrid use-case signal share
           </figcaption>
           <div class="bar-list">
             <div class="bar-row">
@@ -767,8 +775,8 @@
       </section>
 
       <p class="footer-note">
-        Data normalized from the tables in the original signal analysis. Charts
-        show percentage share only.
+        Data normalized from the original analysis pipeline. Charts show
+        percentage share only.
       </p>
     </main>
   </body>
