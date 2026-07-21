@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import holonImage from '../holon_new_2.png'
 import modelRuntimeImage from '../model-runtime-2.png'
 
@@ -9,7 +9,6 @@ const layers = [
     body: 'Zero-setup inference. Holon arrives with the engine, models, and configs pre-tuned for stable 24/7 performance, you never touch a chat template.',
     link: {
       label: 'See supported models',
-      href: 'mailto:sayyss@holon-labs.com?subject=Supported%20models',
     },
     image: modelRuntimeImage,
     imageAlt: 'Holon model runtime showing an optimized GPT-OSS model ready for local inference',
@@ -50,13 +49,40 @@ const hybridBenchmark = {
 const specs = [
   ['Processor', 'Ryzen™ AI Max+ 395'],
   ['Memory', '64 GB LPDDR5x-8000, soldered'],
-  ['Operating system', 'Linux'],
+  ['Storage', '512 GB NVMe'],
+  ['Operating system', 'Ubuntu Linux'],
   ['Power draw', '140 W'],
+]
+
+const supportedModels = [
+  ['GPT-OSS 20B', '131,072 tokens (128K)'],
+  ['Qwen3.6 35B-A3B', '131,072 tokens (128K)'],
+  ['Qwen3.6 27B Base', '131,072 tokens (128K)'],
+  ['Gemma 4 26B-A4B', '262,144 tokens (256K)'],
+  ['Gemma 4 31B', '65,536 tokens (64K)'],
 ]
 
 function App() {
   const [form, setForm] = useState({ name: '', email: '', useCase: '' })
   const [status, setStatus] = useState('idle')
+  const [modelsOpen, setModelsOpen] = useState(false)
+
+  useEffect(() => {
+    if (!modelsOpen) return undefined
+
+    const previousOverflow = document.body.style.overflow
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setModelsOpen(false)
+    }
+
+    document.body.style.overflow = 'hidden'
+    document.addEventListener('keydown', closeOnEscape)
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener('keydown', closeOnEscape)
+    }
+  }, [modelsOpen])
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -207,9 +233,9 @@ function App() {
                   <h3>{layer.title}</h3>
                   <p>{layer.body}</p>
                   {layer.link && (
-                    <a className="layer-link" href={layer.link.href} aria-label="Ask about supported models by email">
+                    <button className="layer-link" type="button" onClick={() => setModelsOpen(true)}>
                       {layer.link.label} <span aria-hidden="true">→</span>
-                    </a>
+                    </button>
                   )}
                 </div>
               </article>
@@ -352,6 +378,49 @@ function App() {
         <a href="/blogs/">Research</a>
         <a href="mailto:sayyss@holon-labs.com">sayyss@holon-labs.com</a>
       </footer>
+
+      {modelsOpen && (
+        <div
+          className="modal-backdrop"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setModelsOpen(false)
+          }}
+        >
+          <section className="models-modal" role="dialog" aria-modal="true" aria-labelledby="models-title">
+            <header className="models-modal-header">
+              <div>
+                <p className="section-label">Model Runtime</p>
+                <h2 id="models-title">Supported models</h2>
+              </div>
+              <button className="modal-close" type="button" onClick={() => setModelsOpen(false)} aria-label="Close supported models" autoFocus>
+                <span aria-hidden="true">×</span>
+              </button>
+            </header>
+
+            <div className="models-table-wrap">
+              <table className="models-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Model</th>
+                    <th scope="col">Context window</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {supportedModels.map(([model, context]) => (
+                    <tr key={model}>
+                      <td>{model}</td>
+                      <td>{context}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <p className="models-note">
+                We are constantly testing the stability of newly released models and will regularly release optimized profiles for each.
+              </p>
+            </div>
+          </section>
+        </div>
+      )}
     </div>
   )
 }
