@@ -6,7 +6,12 @@ const layers = [
   {
     number: '01',
     title: 'Model Runtime',
-    body: 'Zero-setup inference. Holon arrives with the engine, models, and configs pre-tuned for stable 24/7 performance, you never touch a chat template.',
+    body: [
+      'Zero setup inference',
+      'Pre-tuned models and configs',
+      'Stable 24/7 inference',
+      '...never touch a chat template',
+    ],
     link: {
       label: 'See supported models',
     },
@@ -272,7 +277,13 @@ function App() {
                 )}
                 <div className="layer-content">
                   <h3>{layer.title}</h3>
-                  <p>{layer.body}</p>
+                  {Array.isArray(layer.body) ? (
+                    <ul className="layer-copy-list">
+                      {layer.body.map((line) => <li key={line}>{line}</li>)}
+                    </ul>
+                  ) : (
+                    <p>{layer.body}</p>
+                  )}
                   {layer.link && (
                     <button className="layer-link" type="button" onClick={() => setModelsOpen(true)}>
                       {layer.link.label} <span aria-hidden="true">→</span>

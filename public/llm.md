@@ -33,7 +33,10 @@ No payment is required to apply.
 
 ### 1. Model Runtime
 
-Zero-setup inference. Holon arrives with the inference engine, models, and configurations pre-tuned for stable, continuous performance. Users do not need to configure chat templates.
+- Zero setup inference
+- Pre-tuned models and configs
+- Stable 24/7 inference
+- ...never touch a chat template
 
 #### Supported Models
 
