@@ -15,13 +15,19 @@ Holon is a prebuilt local AI computer. Its hardware and software ship together a
 
 Holon is currently available through a limited beta program.
 
+Apply for early access to Holon.
+
 The beta application asks for:
 
 - Name
 - Email
-- Intended use for Holon
+- Phone number
+- One or more intended uses: coding, personal, research, or another specified use
+- Whether the applicant lives in San Francisco
 
-No payment is required to apply. Accepted participants receive configuration, pricing, and reservation details before committing.
+San Francisco participants can have Holon hand delivered and set up for free.
+
+No payment is required to apply.
 
 ## One Computer, Three Layers
 
@@ -131,16 +137,6 @@ Exported ChatGPT and Claude conversations
 Hybrid mode produced an 89% lower cost than the frontier-only workflow.
 
 The SWE-bench Pro result comes from official Docker evaluation of a 144-task subset. The Terminal-Bench result is a local Harbor run and is not a leaderboard submission. Results are backed by saved traces, patches, and verifier logs.
-
-## Hardware Specifications
-
-| Component | Specification |
-|---|---|
-| Processor | Ryzen AI Max+ 395 |
-| Memory | 64 GB LPDDR5x-8000, soldered |
-| Storage | 512 GB NVMe |
-| Operating system | Ubuntu Linux |
-| Power draw | 140 W |
 
 ## Published Research
 

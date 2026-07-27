@@ -47,14 +47,6 @@ const hybridBenchmark = {
   description: 'Official solve rate on a 144-task subset.',
 }
 
-const specs = [
-  ['Processor', 'Ryzen™ AI Max+ 395'],
-  ['Memory', '64 GB LPDDR5x-8000, soldered'],
-  ['Storage', '512 GB NVMe'],
-  ['Operating system', 'Ubuntu Linux'],
-  ['Power draw', '140 W'],
-]
-
 const supportedModels = [
   ['GPT-OSS 20B', '131,072 tokens (128K)'],
   ['Qwen3.6 35B-A3B', '131,072 tokens (128K)'],
@@ -63,8 +55,18 @@ const supportedModels = [
   ['Gemma 4 31B', '65,536 tokens (64K)'],
 ]
 
+const useCaseOptions = ['Coding', 'Personal', 'Research', 'Other']
+
 function App() {
-  const [form, setForm] = useState({ name: '', email: '', useCase: '' })
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    useCases: [],
+    otherUseCase: '',
+    sanFrancisco: '',
+  })
+  const [formErrors, setFormErrors] = useState({})
   const [status, setStatus] = useState('idle')
   const [modelsOpen, setModelsOpen] = useState(false)
 
@@ -88,11 +90,39 @@ function App() {
   const handleChange = (event) => {
     const { name, value } = event.target
     setForm((current) => ({ ...current, [name]: value }))
+    setFormErrors((current) => ({ ...current, [name]: undefined }))
+    if (status === 'error') setStatus('idle')
+  }
+
+  const handleUseCaseChange = (useCase) => {
+    setForm((current) => ({
+      ...current,
+      useCases: current.useCases.includes(useCase)
+        ? current.useCases.filter((item) => item !== useCase)
+        : [...current.useCases, useCase],
+      otherUseCase: useCase === 'Other' && current.useCases.includes('Other')
+        ? ''
+        : current.otherUseCase,
+    }))
+    setFormErrors((current) => ({ ...current, useCases: undefined, otherUseCase: undefined }))
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
     if (status === 'submitting') return
+
+    const errors = {}
+    if (form.useCases.length === 0) errors.useCases = 'Select at least one use case.'
+    if (form.useCases.includes('Other') && !form.otherUseCase.trim()) {
+      errors.otherUseCase = 'Tell us what you would use Holon for.'
+    }
+    if (!form.sanFrancisco) errors.sanFrancisco = 'Select yes or no.'
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors)
+      return
+    }
+
     setStatus('submitting')
 
     try {
@@ -102,14 +132,24 @@ function App() {
         body: JSON.stringify({
           name: form.name,
           email: form.email,
-          use_case: form.useCase,
+          phone: form.phone,
+          use_cases: form.useCases.join(', '),
+          other_use_case: form.otherUseCase || undefined,
+          lives_in_san_francisco: form.sanFrancisco,
           source: 'Holon beta program',
         }),
       })
 
       if (!response.ok) throw new Error('Submission failed')
       setStatus('success')
-      setForm({ name: '', email: '', useCase: '' })
+      setForm({
+        name: '',
+        email: '',
+        phone: '',
+        useCases: [],
+        otherUseCase: '',
+        sanFrancisco: '',
+      })
     } catch {
       setStatus('error')
     }
@@ -321,31 +361,11 @@ function App() {
           </p>
         </section>
 
-        <section className="specs-section" id="specs">
-          <div className="section-heading specs-heading">
-            <p className="section-label">Specifications</p>
-            <h2>Built as one system.</h2>
-            <p>Hardware and software ship together, tuned as a single local AI system.</p>
-          </div>
-
-          <dl className="spec-list">
-            {specs.map(([term, description]) => (
-              <div className="spec-row" key={term}>
-                <dt>{term}</dt>
-                <dd>{description}</dd>
-              </div>
-            ))}
-          </dl>
-        </section>
-
         <section className="beta-section" id="beta">
           <div className="beta-copy">
             <p className="section-label">Limited beta</p>
             <h2>Bring Holon home.</h2>
-            <p>
-              Apply for early access to Holon hardware, the local coding harness, and automatic fine-tuning.
-              Accepted participants will receive configuration, pricing, and reservation details before committing.
-            </p>
+            <p>Apply for early access to Holon</p>
           </div>
 
           {status === 'success' ? (
@@ -381,17 +401,82 @@ function App() {
                   />
                 </label>
               </div>
+
               <label>
-                <span>What would you use Holon for?</span>
-                <textarea
-                  name="useCase"
-                  value={form.useCase}
+                <span>Phone number</span>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={form.phone}
                   onChange={handleChange}
-                  placeholder="Coding, private research, internal workflows..."
-                  rows="4"
+                  autoComplete="tel"
+                  placeholder="+1 (415) 555-0123"
                   required
                 />
               </label>
+
+              <fieldset className="form-group">
+                <legend>What would you use Holon for?</legend>
+                <details className={`multi-select${formErrors.useCases ? ' field-invalid' : ''}`}>
+                  <summary>
+                    <span>
+                      {form.useCases.length > 0
+                        ? form.useCases.join(', ')
+                        : 'Select all that apply'}
+                    </span>
+                    <span aria-hidden="true">⌄</span>
+                  </summary>
+                  <div className="multi-select-options">
+                    {useCaseOptions.map((useCase) => (
+                      <label className="multi-select-option" key={useCase}>
+                        <input
+                          type="checkbox"
+                          checked={form.useCases.includes(useCase)}
+                          onChange={() => handleUseCaseChange(useCase)}
+                        />
+                        <span>{useCase}</span>
+                      </label>
+                    ))}
+                  </div>
+                </details>
+                {formErrors.useCases && <p className="field-error">{formErrors.useCases}</p>}
+              </fieldset>
+
+              {form.useCases.includes('Other') && (
+                <label>
+                  <span>Other use</span>
+                  <input
+                    type="text"
+                    name="otherUseCase"
+                    value={form.otherUseCase}
+                    onChange={handleChange}
+                    placeholder="Describe your use case"
+                    aria-invalid={Boolean(formErrors.otherUseCase)}
+                  />
+                  {formErrors.otherUseCase && <p className="field-error">{formErrors.otherUseCase}</p>}
+                </label>
+              )}
+
+              <fieldset className="form-group location-field">
+                <legend>Get Holon hand delivered and set-up for free</legend>
+                <p className="field-description">Do you live in San Francisco?</p>
+                <div className="choice-options">
+                  {['Yes', 'No'].map((choice) => (
+                    <label className="choice-option" key={choice}>
+                      <input
+                        type="radio"
+                        name="sanFrancisco"
+                        value={choice}
+                        checked={form.sanFrancisco === choice}
+                        onChange={handleChange}
+                      />
+                      <span>{choice}</span>
+                    </label>
+                  ))}
+                </div>
+                {formErrors.sanFrancisco && <p className="field-error">{formErrors.sanFrancisco}</p>}
+              </fieldset>
+
               <div className="form-footer">
                 <button type="submit" disabled={status === 'submitting'}>
                   {status === 'submitting' ? 'Submitting...' : 'Apply for beta'}
