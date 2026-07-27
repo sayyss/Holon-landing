@@ -219,9 +219,13 @@ a {
 
 .layer {
   display: grid;
-  grid-template-columns: minmax(0, 0.2fr) minmax(0, 0.8fr) minmax(0, 1.4fr);
-  gap: 4vw;
-  align-items: start;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  grid-template-areas:
+    "index visual"
+    "content visual";
+  column-gap: 8vw;
+  row-gap: 20px;
+  align-items: center;
   min-width: 0;
   padding: 8vw 0;
 }
@@ -231,7 +235,7 @@ a {
 }
 
 .layer-with-visual .layer-index {
-  align-self: start;
+  align-self: end;
 }
 
 .layer + .layer {
@@ -239,6 +243,7 @@ a {
 }
 
 .layer-index {
+  grid-area: index;
   color: var(--muted);
   font-family: "DM Mono", monospace;
   font-size: 11px;
@@ -257,6 +262,11 @@ a {
   font-weight: 550;
   line-height: 1.08;
   letter-spacing: 0;
+}
+
+.layer-content {
+  grid-area: content;
+  align-self: start;
 }
 
 .layer-content p,
@@ -298,6 +308,7 @@ a {
 }
 
 .layer-visual {
+  grid-area: visual;
   width: min(100%, 420px);
   justify-self: center;
   margin: 0;
@@ -327,7 +338,7 @@ a {
 
 .layer-harness,
 .layer-adaptation {
-  grid-template-columns: minmax(0, 0.16fr) minmax(0, 1.34fr) minmax(0, 0.9fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
 }
 
 .layer-visual-harness {
@@ -457,6 +468,79 @@ a {
 
 .mobile-arrow {
   display: none;
+}
+
+.memory-section {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 8vw;
+  align-items: center;
+  padding: clamp(88px, 11vw, 150px) 8vw;
+  border-top: 1px solid var(--line);
+  background: #ffffff;
+}
+
+.memory-copy h2 {
+  margin: 0;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: clamp(48px, 6vw, 84px);
+  font-weight: 400;
+  line-height: 0.95;
+}
+
+.memory-copy > p:last-child {
+  max-width: 620px;
+  margin: 28px 0 0;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.memory-diagram {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr) 42px minmax(0, 1fr);
+  align-items: center;
+}
+
+.memory-node {
+  min-width: 0;
+  min-height: 150px;
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  padding: 24px 18px;
+  border: 1px solid var(--line);
+  text-align: center;
+}
+
+.memory-node span {
+  color: var(--muted);
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.memory-node strong {
+  font-size: clamp(14px, 1.4vw, 19px);
+  font-weight: 550;
+  line-height: 1.25;
+}
+
+.memory-source strong + strong {
+  padding-top: 9px;
+  border-top: 1px solid var(--line);
+}
+
+.memory-cartridge {
+  border-color: #9c9c9c;
+  background: #f3f3f3;
+}
+
+.memory-arrow {
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: 24px;
 }
 
 .benchmark-section {
@@ -902,6 +986,10 @@ a {
 
   .layer {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "index"
+      "content"
+      "visual";
     gap: 24px;
     padding: 12vw 0;
   }
@@ -916,11 +1004,13 @@ a {
   }
 
   .hybrid-mode,
+  .memory-section,
   .specs-section,
   .beta-section {
     grid-template-columns: 1fr;
   }
 
+  .memory-section,
   .specs-section,
   .beta-section {
     gap: 54px;
@@ -1007,6 +1097,24 @@ a {
 
   .product-heading h2 {
     font-size: clamp(38px, 10vw, 52px);
+  }
+
+  .memory-section {
+    padding-right: 6vw;
+    padding-left: 6vw;
+  }
+
+  .memory-diagram {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .memory-arrow {
+    transform: rotate(90deg);
+  }
+
+  .memory-node {
+    min-height: 120px;
   }
 
   .product-stage img {

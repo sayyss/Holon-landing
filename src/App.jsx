@@ -21,7 +21,7 @@ const layers = [
   },
   {
     number: '03',
-    title: 'Adaptation',
+    title: 'Distill from frontier-level models',
     body: 'The agent that learns your codebase. Every run Holon Agent makes is logged as a training-ready trace — reasoning and actions kept, tool noise masked out. Successful trajectories are filtered and repaired with a frontier model, fine-tuned into your local model on cloud GPUs, and the new weights only ship back after passing evaluation gates. Your agent gets measurably better at your work, and the improved model lives on your hardware.',
     visual: 'adaptation',
   },
@@ -240,6 +240,38 @@ function App() {
                 </div>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section className="memory-section" id="memory">
+          <div className="memory-copy">
+            <p className="section-label">Personal memory</p>
+            <h2>Memory Cartridges</h2>
+            <p>
+              Holon compresses years of Claude and ChatGPT conversations into a compact 4K-token trained memory cartridge that stays attached to your chosen local model. Each conversation begins with your preferences, projects, and history already in mind, while nearly the entire context window remains available for what you are doing now.
+            </p>
+          </div>
+
+          <div
+            className="memory-diagram"
+            role="img"
+            aria-label="Exported ChatGPT and Claude conversations compressed into a trained memory cartridge attached to a local model"
+          >
+            <div className="memory-node memory-source">
+              <span>Exported conversations</span>
+              <strong>ChatGPT</strong>
+              <strong>Claude</strong>
+            </div>
+            <span className="memory-arrow" aria-hidden="true">→</span>
+            <div className="memory-node memory-cartridge">
+              <span>Trained memory cartridge</span>
+              <strong>4K tokens</strong>
+            </div>
+            <span className="memory-arrow" aria-hidden="true">→</span>
+            <div className="memory-node memory-model">
+              <span>Attached to</span>
+              <strong>Your local model</strong>
+            </div>
           </div>
         </section>
 
