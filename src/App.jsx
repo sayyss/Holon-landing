@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import holonImage from '../holon_new_2.png'
-import modelRuntimeImage from '../model-runtime-2.png'
+import modelRuntimeImage from '../model_runtime_4.png'
 
 const layers = [
   {
@@ -10,8 +10,9 @@ const layers = [
     link: {
       label: 'See supported models',
     },
+    visual: 'runtime',
     image: modelRuntimeImage,
-    imageAlt: 'Holon model runtime showing an optimized GPT-OSS model ready for local inference',
+    imageAlt: 'Holon dashboard showing the local model runtime, hardware status, and connected device',
   },
   {
     number: '02',
@@ -340,7 +341,7 @@ function App() {
         <section className="beta-section" id="beta">
           <div className="beta-copy">
             <p className="section-label">Limited beta</p>
-            <h2>Bring local AI home.</h2>
+            <h2>Bring Holon home.</h2>
             <p>
               Apply for early access to Holon hardware, the local coding harness, and automatic fine-tuning.
               Accepted participants will receive configuration, pricing, and reservation details before committing.

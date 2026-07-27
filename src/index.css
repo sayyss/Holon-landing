@@ -322,6 +322,10 @@ a {
   height: auto;
 }
 
+.layer-runtime .layer-visual {
+  width: 100%;
+}
+
 .layer-visual-placeholder {
   aspect-ratio: 974 / 1250;
   display: grid;
