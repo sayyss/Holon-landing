@@ -35,11 +35,6 @@ const layers = [
 
 const localBenchmarks = [
   {
-    value: '94.6%',
-    title: 'SWE-bench Lite',
-    description: 'Holon Agent with local Qwen 3.5 35B-A3B.',
-  },
-  {
     value: '34.83%',
     title: 'Terminal-Bench 2.0',
     description: 'Local Harbor evaluation of the Holon Agent harness.',

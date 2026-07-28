@@ -571,7 +571,7 @@ a {
 
 .benchmark-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   max-width: 1200px;
   margin: 18px auto 0;
   border-top: 1px solid var(--line);

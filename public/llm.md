@@ -128,7 +128,6 @@ Exported ChatGPT and Claude conversations
 
 | Benchmark | Result | Configuration |
 |---|---:|---|
-| SWE-bench Lite | 94.6% | Holon Agent with local Qwen 3.5 35B-A3B |
 | Terminal-Bench 2.0 | 34.83% | Local Harbor evaluation of Holon Agent |
 
 ### Hybrid Result
