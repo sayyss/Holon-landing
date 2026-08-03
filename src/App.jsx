@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import holonImage from '../holon_new_2.png'
-import modelRuntimeImage from '../model_runtime_4.png'
+import modelRuntimeImage from '../model_runtime_5.png'
 
 const layers = [
   {
